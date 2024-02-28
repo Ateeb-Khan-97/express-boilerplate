@@ -6,8 +6,8 @@
   "scripts": {
     "format": "npx prettier --write \"src/**/*.ts\"",
     "build": "npx tsc",
-    "start": "node dist/index.js",
-    "dev": "npx tsc-watch -p ./tsconfig.json --onSuccess \"node ./dist/index.js\""
+    "start": "NODE_ENV=production node dist/index.js",
+    "dev": "rm -rf dist && npx tsc-watch -p ./tsconfig.json --onSuccess \"node ./dist/index.js\""
   },
   "dependencies": {
     "body-parser": "^1.20.2",
