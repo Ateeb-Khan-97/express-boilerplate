@@ -25,35 +25,35 @@ export class Response {
     switch (typeof response) {
       case 'object':
         if (Array.isArray(response)) {
-          modifiedResponse['data'] = response;
+          modifiedResponse.data = response;
           break;
         }
 
         if (response.status) {
-          modifiedResponse['status'] = response.status;
+          modifiedResponse.status = response.status;
           delete response.status;
         }
 
         if (response.message) {
-          modifiedResponse['message'] = response.message;
+          modifiedResponse.message = response.message;
           delete response.message;
         }
 
         if (response.data) {
-          modifiedResponse['data'] = response.data;
+          modifiedResponse.data = response.data;
         } else {
-          modifiedResponse['data'] = response;
+          modifiedResponse.data = response;
         }
 
         if (JSON.stringify(modifiedResponse.data) == '{}')
-          modifiedResponse['data'] = null;
+          modifiedResponse.data = null;
 
         break;
       case 'string':
-        modifiedResponse['message'] = response;
+        modifiedResponse.message = response;
         break;
       default:
-        modifiedResponse['data'] = response;
+        modifiedResponse.data = response;
         break;
     }
 
@@ -61,7 +61,9 @@ export class Response {
       status: modifiedResponse.status,
       message: modifiedResponse.message,
       data: modifiedResponse.data,
-      success: modifiedResponse.status >= 200 && modifiedResponse.status < 300,
+      success:
+        modifiedResponse.status >= HttpStatus.OK &&
+        modifiedResponse.status < HttpStatus.MULTIPLE_CHOICES,
     });
   }
 }

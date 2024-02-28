@@ -16,10 +16,10 @@ export const errorMiddleware: ErrorRequestHandler = (err, req, res, next) => {
   }
 
   if (err instanceof ZodError) {
-    response['status'] = HttpStatus.BAD_REQUEST;
-    response['message'] = `${err.issues[0]?.path[0]} ${err.issues[0]?.message}`;
+    response.status = HttpStatus.BAD_REQUEST;
+    response.message = `${err.issues[0]?.path[0]} ${err.issues[0]?.message}`;
   }
 
-  if (err.message) response['message'] = err.message;
+  if (err.message) response.message = err.message;
   return Response.map({ res, response });
 };
