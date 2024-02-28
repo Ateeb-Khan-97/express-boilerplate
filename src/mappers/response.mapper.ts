@@ -1,4 +1,5 @@
 import { Response as ExpressResponse } from 'express';
+import { HttpStatus } from '../util/http-status.util';
 
 interface IModifiedResponse {
   status: number;
@@ -15,8 +16,8 @@ interface IMapParams {
 export class Response {
   static map({ res, response }: IMapParams) {
     const modifiedResponse: IModifiedResponse = {
-      status: 200,
-      message: 'Success',
+      status: HttpStatus.OK,
+      message: HttpStatus.OK_MESSAGE,
       data: null,
       success: true,
     };

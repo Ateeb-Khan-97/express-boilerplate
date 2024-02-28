@@ -2,11 +2,12 @@ import { ErrorRequestHandler } from 'express';
 import { HttpException } from '../util/exception.util';
 import { ZodError } from 'zod';
 import { Response } from '../mappers/response.mapper';
+import { HttpStatus } from '../util/http-status.util';
 
 export const errorMiddleware: ErrorRequestHandler = (err, req, res, next) => {
   const response = {
-    status: 500,
-    message: 'INTERNAL_SERVER_ERROR',
+    status: HttpStatus.INTERNAL_SERVER_ERROR,
+    message: HttpStatus.INTERNAL_SERVER_ERROR_MESSAGE,
   };
 
   if (err instanceof HttpException) {
@@ -15,7 +16,7 @@ export const errorMiddleware: ErrorRequestHandler = (err, req, res, next) => {
   }
 
   if (err instanceof ZodError) {
-    response['status'] = 400;
+    response['status'] = HttpStatus.BAD_REQUEST;
     response['message'] = `${err.issues[0]?.path[0]} ${err.issues[0]?.message}`;
   }
 

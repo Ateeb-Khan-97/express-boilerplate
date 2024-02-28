@@ -1,17 +1,20 @@
 import type { Context } from '../../shared/interface/application.interface';
-import { Controller, Get } from '../../util/decorator.util';
-import { Logger } from '../../util/logger.util';
+import { Controller, Post } from '../../util/decorator.util';
 
 @Controller('/auth')
 export class AuthController {
-  private readonly logger: Logger;
-
-  constructor() {
-    this.logger = new Logger(AuthController.name);
+  @Post('/sign-in')
+  signInHandler(c: Context) {
+    return c;
   }
 
-  @Get()
-  handler(c: Context) {
-    return c;
+  @Post('/sign-up')
+  signUpHandler(c: Context) {
+    return c.body;
+  }
+
+  @Post('/refresh')
+  refreshHandler(c: Context) {
+    return c.query;
   }
 }

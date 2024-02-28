@@ -1,3 +1,5 @@
+import { HttpStatus } from './http-status.util';
+
 interface IHttpException {
   message: string;
   status: number;
@@ -8,37 +10,37 @@ export class HttpException extends Error implements IHttpException {
   constructor(message: string, status: number) {
     super(message);
     this.name = this.constructor.name;
-    this.status = status || 500;
+    this.status = status || HttpStatus.INTERNAL_SERVER_ERROR;
     Error.captureStackTrace(this, this.constructor);
   }
 }
 
 export class ForbiddenException extends HttpException {
-  constructor(message: string) {
-    super(message, 403);
+  constructor(message: string = HttpStatus.FORBIDDEN_MESSAGE) {
+    super(message, HttpStatus.FORBIDDEN);
   }
 }
 
 export class BadRequestException extends HttpException {
-  constructor(message: string) {
-    super(message, 400);
+  constructor(message: string = HttpStatus.BAD_REQUEST_MESSAGE) {
+    super(message, HttpStatus.BAD_REQUEST);
   }
 }
 
 export class UnauthorizedException extends HttpException {
-  constructor(message: string) {
-    super(message, 401);
+  constructor(message: string = HttpStatus.UNAUTHORIZED_MESSAGE) {
+    super(message, HttpStatus.UNAUTHORIZED);
   }
 }
 
 export class NotFoundException extends HttpException {
-  constructor(message: string = 'NOT_FOUND') {
-    super(message, 404);
+  constructor(message: string = HttpStatus.NOT_FOUND_MESSAGE) {
+    super(message, HttpStatus.NOT_FOUND);
   }
 }
 
 export class MethodNotAllowedException extends HttpException {
-  constructor(message: string) {
-    super(message, 405);
+  constructor(message: string = HttpStatus.METHOD_NOT_ALLOWED_MESSAGE) {
+    super(message, HttpStatus.METHOD_NOT_ALLOWED);
   }
 }
