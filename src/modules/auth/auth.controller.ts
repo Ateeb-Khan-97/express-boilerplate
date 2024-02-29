@@ -24,6 +24,7 @@ import {
 } from './auth.schema';
 import { ENV } from '../../util/env.util';
 import { HttpStatus } from '../../util/http-status.util';
+import { authService } from './auth.service';
 
 @Controller('/auth')
 export class AuthController {
@@ -50,6 +51,7 @@ export class AuthController {
       { expiresIn: ENV.JWT_REFRESH_EXP },
     );
 
+    await authService.upsertByUserId(user.id, accessToken, refreshToken);
     return {
       user: payload,
       accessToken,
@@ -77,6 +79,11 @@ export class AuthController {
       body.refreshToken,
       ENV.JWT_REFRESH_SECRET,
     );
+
+    const session = await authService.findSessionByUserId(user.id);
+    if (!session) throw new NotFoundException(AUTH_MESSAGES.SESSION_NOT_FOUND);
+    if (session.refreshToken != body.refreshToken)
+      throw new NotFoundException(AUTH_MESSAGES.REFRESH_TOKEN_NOT_MATCH);
 
     if (user.exp) delete user.exp;
     if (user.iat) delete user.iat;

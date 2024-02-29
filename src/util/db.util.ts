@@ -11,5 +11,4 @@ if (!(global as any).db) {
 }
 
 db = (global as any).db as PrismaClient;
-
 export default db;
