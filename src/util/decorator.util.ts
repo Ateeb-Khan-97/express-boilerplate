@@ -1,6 +1,6 @@
 import { Schema } from 'zod';
 import { Logger } from './logger.util';
-import { Router } from 'express';
+import { Router, type Express } from 'express';
 import { APPLICATION_CONSTANTS } from '../shared/constant/application.constant';
 import { Response } from '../mappers/response.mapper';
 import { protect } from '../middlewares/auth.middleware';

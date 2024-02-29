@@ -3,10 +3,10 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import { applicationModule } from './app.module';
 import { Logger } from './util/logger.util';
 
 import { APPLICATION_CONSTANTS } from './shared/constant/application.constant';
+import { applicationModule } from './app.module';
 
 const app = express();
 

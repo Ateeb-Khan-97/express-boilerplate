@@ -3,13 +3,9 @@ import { Logger } from './util/logger.util';
 import { APPLICATION_CONSTANTS } from './shared/constant/application.constant';
 import { errorMiddleware } from './middlewares/error.middleware';
 import { notfoundMiddleware } from './middlewares/not-found.middleware';
-/** controllers */
-import { AuthController } from './modules/auth/auth.controller';
-import { UserController } from './modules/user/user.controller';
+import { controllers } from './util/controllers.util';
 
 export function applicationModule(app: Express) {
-  /** Import all your controllers here */
-  const controllers = [AuthController, UserController] as any[];
   const logger = new Logger(APPLICATION_CONSTANTS.TAG);
 
   for (const Controller of controllers) {
