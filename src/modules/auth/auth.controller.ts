@@ -52,6 +52,7 @@ export class AuthController {
     );
 
     await authService.upsertByUserId(user.id, accessToken, refreshToken);
+
     return {
       user: payload,
       accessToken,
@@ -99,6 +100,7 @@ export class AuthController {
       { expiresIn: ENV.JWT_REFRESH_EXP },
     );
 
+    await authService.updateSession(user.id, accessToken, refreshToken);
     return { user, accessToken, refreshToken };
   }
 }

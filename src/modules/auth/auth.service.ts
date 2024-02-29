@@ -17,17 +17,11 @@ class AuthService {
     refreshToken: string,
   ) {
     try {
-      const session = await db.session.findUnique({
-        where: { userId },
-        select: { accessToken: true, refreshToken: true },
-      });
-      if (!session)
+      const session = await db.session.findUnique({ where: { userId } });
+      if (!session) {
         return this.createSession(userId, accessToken, refreshToken);
-
-      session['accessToken'] = accessToken;
-      session['refreshToken'] = refreshToken;
-
-      return db.session.update({ data: session, where: { userId } });
+      }
+      return this.updateSession(userId, accessToken, refreshToken);
     } catch (err) {
       this.logger.error(err.message);
       throw err;
@@ -41,6 +35,22 @@ class AuthService {
   ) {
     try {
       await db.session.create({ data: { accessToken, refreshToken, userId } });
+    } catch (err) {
+      this.logger.error(err.message);
+      throw err;
+    }
+  }
+
+  async updateSession(
+    userId: number,
+    accessToken: string,
+    refreshToken: string,
+  ) {
+    try {
+      await db.session.update({
+        data: { accessToken, refreshToken },
+        where: { userId },
+      });
     } catch (err) {
       this.logger.error(err.message);
       throw err;

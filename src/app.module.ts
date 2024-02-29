@@ -5,7 +5,6 @@ import { errorMiddleware } from './middlewares/error.middleware';
 import { notfoundMiddleware } from './middlewares/not-found.middleware';
 /** controllers */
 import { AuthController } from './modules/auth/auth.controller';
-
 import { UserController } from './modules/user/user.controller';
 
 export function applicationModule(app: Express) {

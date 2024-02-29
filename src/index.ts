@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser';
 import express from 'express';
+import helmet from 'helmet';
 import cors from 'cors';
 
 import { applicationModule } from './app.module';
@@ -10,6 +11,7 @@ import { APPLICATION_CONSTANTS } from './shared/constant/application.constant';
 const app = express();
 
 app.use(cors());
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
