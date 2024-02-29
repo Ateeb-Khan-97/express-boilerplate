@@ -1,10 +1,20 @@
 import db from '../../util/db.util';
 import { Logger } from '../../util/logger.util';
 
+import * as bcrypt from 'bcrypt';
+
 class AuthService {
   private readonly logger: Logger;
   constructor() {
     this.logger = new Logger(AuthService.name);
+  }
+
+  async hashPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, 10);
+  }
+
+  async verifyPassword(password: string, hash: string): Promise<boolean> {
+    return bcrypt.compare(password, hash);
   }
 
   async findSessionByUserId(userId: number) {

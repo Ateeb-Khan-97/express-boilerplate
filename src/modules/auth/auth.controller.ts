@@ -35,7 +35,7 @@ export class AuthController {
     const user = await userService.findOneUnique({ email: body.email });
 
     if (!user) throw new NotFoundException(AUTH_MESSAGES.NOT_FOUND);
-    if (user.password != body.password)
+    if (!(await authService.verifyPassword(body.password, user.password)))
       throw new BadRequestException(AUTH_MESSAGES.INVALID_CREDENTIALS);
 
     const payload = commonService.exclude(user, ['password']);
@@ -67,6 +67,7 @@ export class AuthController {
     const user = await userService.findOneUnique({ email: body.email });
     if (user) throw new BadRequestException(AUTH_MESSAGES.ALREADY_EXISTS);
 
+    body['password'] = await authService.hashPassword(body.password);
     await userService.create(body);
 
     return { status: HttpStatus.CREATED, message: AUTH_MESSAGES.REGISTERED };
