@@ -1,16 +1,13 @@
+import { commonService } from '../../shared/common.service';
 import type { Context } from '../../shared/interface/application.interface';
-import { Controller, Get, Post } from '../../util/decorator.util';
-import { HttpStatus } from '../../util/http-status.util';
+import { Controller, Get } from '../../util/decorator.util';
+import { userService } from './user.service';
 
 @Controller('/users')
 export class UserController {
   @Get()
-  getAllHandler(c: Context) {
-    return null;
-  }
-
-  @Post()
-  createUserHandler(c: Context) {
-    return { status: HttpStatus.CREATED };
+  async getAllHandler(c: Context) {
+    const users = await userService.findAll();
+    return users.map((each) => commonService.exclude(each, ['password']));
   }
 }

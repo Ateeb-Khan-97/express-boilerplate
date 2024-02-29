@@ -58,12 +58,12 @@ export class Response {
     }
 
     return res.status(modifiedResponse.status).send({
-      status: modifiedResponse.status,
-      message: modifiedResponse.message,
-      data: modifiedResponse.data,
       success:
         modifiedResponse.status >= HttpStatus.OK &&
         modifiedResponse.status < HttpStatus.MULTIPLE_CHOICES,
+      status: modifiedResponse.status,
+      message: modifiedResponse.message,
+      data: modifiedResponse.data,
     });
   }
 }

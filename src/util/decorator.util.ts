@@ -3,6 +3,7 @@ import { Logger } from './logger.util';
 import { Router } from 'express';
 import { APPLICATION_CONSTANTS } from '../shared/constant/application.constant';
 import { Response } from '../mappers/response.mapper';
+import { protect } from '../middlewares/auth.middleware';
 
 interface IFuncType {
   method: 'get' | 'post' | 'put' | 'patch' | 'delete';
@@ -60,7 +61,9 @@ export const Controller = (base: string) => {
               body: {},
               params: {},
               query: {},
+              user: {},
             };
+            if (!each.public) context['user'] = await protect(req);
             if (each.schema) context['body'] = each.schema.parse(req.body);
             if (each.paramSchema)
               context['params'] = each.paramSchema.parse(req.params);

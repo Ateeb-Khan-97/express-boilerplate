@@ -6,6 +6,10 @@ const EnvSchema = z.object({
   NODE_ENV: z.enum(['production', 'development']).default('development'),
   PORT: z.string().default('5000'),
   JWT_ACCESS_SECRET: z.string(),
+  JWT_ACCESS_EXP: z.string(),
+  JWT_REFRESH_SECRET: z.string(),
+  JWT_REFRESH_EXP: z.string(),
+  DATABASE_URL: z.string(),
 });
 
 export type IEnv = z.infer<typeof EnvSchema>;
